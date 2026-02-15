@@ -184,18 +184,42 @@ Three-stage pipeline:
 - Real speech exhibits **wider, more natural F0 variation** with two broad peaks (male and female pitch ranges)
 - Synthetic (TTS) speech shows **tighter, more uniform** F0 distributions with less context-dependent intonation
 
+<p align="center">
+  <img src="plots/f0_dist_44k_25ms.png" width="48%" />
+  <img src="plots/f0_dist_16k_fullclip.png" width="48%" />
+</p>
+<p align="center"><i>Left: F0 distribution at 44.1 kHz | Right: F0 distribution at 16 kHz</i></p>
+
 ### Spectral Centroid Distribution
 - Real recordings have **higher centroid values** (more high-frequency content from sibilants, breath noise, microphone artifacts)
 - Synthetic speech sounds **slightly smoother or muffled**, lacking sharp consonant bursts
+
+<p align="center">
+  <img src="plots/centroid_dist_44k_25ms.png" width="48%" />
+  <img src="plots/centroid_dist_16k_fullclip.png" width="48%" />
+</p>
+<p align="center"><i>Left: Spectral centroid at 44.1 kHz | Right: Spectral centroid at 16 kHz</i></p>
 
 ### Feature Scatter Plots
 - 2D scatter plots of spectral centroid vs. bandwidth show **visible class separation**
 - Real clips occupy the high-centroid, high-bandwidth region that fake clips rarely reach
 
+<p align="center">
+  <img src="plots/scatter_44k_25ms.png" width="48%" />
+  <img src="plots/scatter_16k_fullclip.png" width="48%" />
+</p>
+<p align="center"><i>Left: Centroid vs. Bandwidth at 44.1 kHz | Right: Centroid vs. Bandwidth at 16 kHz</i></p>
+
 ### Correlation Heatmaps
 - **Pearson correlation** computed separately for real and fake speech
 - Blocks of high correlation appear among spectral features (centroid, bandwidth, rolloff) and among energy features
 - **Differences between the two heatmaps** reveal how feature relationships shift between genuine and synthetic speech
+
+<p align="center">
+  <img src="plots/corr_heatmap_44k_25ms.png" width="48%" />
+  <img src="plots/corr_heatmap_16k_fullclip.png" width="48%" />
+</p>
+<p align="center"><i>Left: Correlation heatmap at 44.1 kHz | Right: Correlation heatmap at 16 kHz</i></p>
 
 ---
 
@@ -289,20 +313,52 @@ RBF SVM >> (GMM ~ QDA) > (LR ~ LDA ~ Linear SVM) >> GNB
 
 ## Visualizations
 
-The notebook generates the following plots:
+All plots are generated for both sampling-rate conditions (`44k_25ms` and `16k_fullclip`). Full images available in the [`plots/`](plots/) directory.
+
+### ROC Curves
+
+<p align="center">
+  <img src="plots/roc_44k_25ms.png" width="48%" />
+  <img src="plots/roc_16k_fullclip.png" width="48%" />
+</p>
+<p align="center"><i>ROC curves for all 7 models. RBF SVM dominates with AUC ~0.98. Left: 44.1 kHz | Right: 16 kHz</i></p>
+
+### DET Curves
+
+<p align="center">
+  <img src="plots/det_44k_25ms.png" width="48%" />
+  <img src="plots/det_16k_fullclip.png" width="48%" />
+</p>
+<p align="center"><i>Detection Error Trade-off curves. Lower-left = better. Left: 44.1 kHz | Right: 16 kHz</i></p>
+
+### Model Accuracy Comparison
+
+<p align="center">
+  <img src="plots/accuracy_bar_44k_25ms.png" width="48%" />
+  <img src="plots/accuracy_bar_16k_fullclip.png" width="48%" />
+</p>
+<p align="center"><i>Train vs. Test accuracy bar charts for all 7 classifiers. Left: 44.1 kHz | Right: 16 kHz</i></p>
+
+### FAR / FRR Analysis
+
+<p align="center">
+  <img src="plots/far_frr_44k_25ms.png" width="48%" />
+  <img src="plots/far_frr_16k_fullclip.png" width="48%" />
+</p>
+<p align="center"><i>False Acceptance Rate vs. False Rejection Rate. Left: 44.1 kHz | Right: 16 kHz</i></p>
+
+### All Plot Files
 
 | Plot | Description |
 |---|---|
-| `f0_dist_*.png` | F0 (pitch) distribution histograms for real vs. fake |
-| `centroid_dist_*.png` | Spectral centroid distribution histograms |
-| `scatter_*.png` | Spectral centroid vs. bandwidth 2D scatter plots |
-| `corr_heatmap_*.png` | Pearson correlation heatmaps (real vs. fake) |
-| `roc_*.png` | ROC curves for all 7 models |
-| `det_*.png` | Detection Error Trade-off curves |
-| `accuracy_bar_*.png` | Train vs. test accuracy bar charts |
-| `far_frr_*.png` | FAR/FRR analysis plots |
-
-All plots are generated for both sampling-rate conditions (`44k_25ms` and `16k_fullclip`).
+| `plots/f0_dist_*.png` | F0 (pitch) distribution histograms for real vs. fake |
+| `plots/centroid_dist_*.png` | Spectral centroid distribution histograms |
+| `plots/scatter_*.png` | Spectral centroid vs. bandwidth 2D scatter plots |
+| `plots/corr_heatmap_*.png` | Pearson correlation heatmaps (real vs. fake) |
+| `plots/roc_*.png` | ROC curves for all 7 models |
+| `plots/det_*.png` | Detection Error Trade-off curves |
+| `plots/accuracy_bar_*.png` | Train vs. test accuracy bar charts |
+| `plots/far_frr_*.png` | FAR/FRR analysis plots |
 
 ---
 
@@ -315,7 +371,25 @@ Deepfake-Audio-Detection/
 |-- README.md                                       # This file
 |-- paper/
 |   |-- Classical_ML_Baselines_Deepfake_Audio.pdf   # Research paper
+|-- plots/
+|   |-- f0_dist_44k_25ms.png                        # F0 distribution (44.1 kHz)
+|   |-- f0_dist_16k_fullclip.png                    # F0 distribution (16 kHz)
+|   |-- centroid_dist_44k_25ms.png                   # Spectral centroid distribution (44.1 kHz)
+|   |-- centroid_dist_16k_fullclip.png               # Spectral centroid distribution (16 kHz)
+|   |-- scatter_44k_25ms.png                         # Centroid vs Bandwidth scatter (44.1 kHz)
+|   |-- scatter_16k_fullclip.png                     # Centroid vs Bandwidth scatter (16 kHz)
+|   |-- corr_heatmap_44k_25ms.png                    # Correlation heatmap (44.1 kHz)
+|   |-- corr_heatmap_16k_fullclip.png                # Correlation heatmap (16 kHz)
+|   |-- roc_44k_25ms.png                             # ROC curves (44.1 kHz)
+|   |-- roc_16k_fullclip.png                         # ROC curves (16 kHz)
+|   |-- det_44k_25ms.png                             # DET curves (44.1 kHz)
+|   |-- det_16k_fullclip.png                         # DET curves (16 kHz)
+|   |-- accuracy_bar_44k_25ms.png                    # Accuracy bar chart (44.1 kHz)
+|   |-- accuracy_bar_16k_fullclip.png                # Accuracy bar chart (16 kHz)
+|   |-- far_frr_44k_25ms.png                         # FAR/FRR plot (44.1 kHz)
+|   |-- far_frr_16k_fullclip.png                     # FAR/FRR plot (16 kHz)
 |-- LICENSE                                          # MIT License
+|-- .gitignore                                       # Git ignore rules
 ```
 
 ---
