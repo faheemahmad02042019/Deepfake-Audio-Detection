@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Data (too large for git)
+FoR_root/
+*.wav
+*.zip
+
+# Environment
+.env
+.venv/
+venv/
